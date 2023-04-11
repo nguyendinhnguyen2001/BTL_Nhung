@@ -20,11 +20,11 @@ def register_user(request):
         listU=User.objects.all()
         for u in listU:
             if u.fullname==name and u.username==username and u.password==password1:
-                return Response({"message":"Invalid"},status=status.HTTP_204_NO_CONTENT)
+                return Response({"data":"No content","message":"Invalid","code":status.HTTP_204_NO_CONTENT},status=status.HTTP_204_NO_CONTENT)
         user.save()
-        return Response({"message":"Success"},status=status.HTTP_200_OK)
+        return Response({"data":"No content","message":"Success","code":status.HTTP_200_OK},status=status.HTTP_200_OK)
     else:
-        return Response({"message":"Error Registration"},status=status.HTTP_400_BAD_REQUEST)
+        return Response({"data":"No content","message":"Error Registration","code":status.HTTP_400_BAD_REQUEST},status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -35,14 +35,15 @@ def login(request):
     listU=User.objects.all()
     for u in listU:
         if u.username==uname and u.password==passw:
-            return Response({"id":u.id_user,"message":"Login Success"},status=status.HTTP_200_OK)
-    return Response({"id":None,"message":"Login Failed"},status=status.HTTP_400_BAD_REQUEST)
+            data=[{"id":u.id_user}]
+            return Response({"data":(str)(u.id_user),"message":"Login Success","code":status.HTTP_200_OK},status=status.HTTP_200_OK)
+    return Response({"data":None,"message":"Login Failed","code":status.HTTP_400_BAD_REQUEST},status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def get_user_by_id(request,id):
     user = User.objects.get(id_user=id)
     data=[{"id":user.id_user,"fullname":user.fullname,"avatar":user.avatar,"username":user.username,"password":user.password}]
-    return Response({"data":data},status=status.HTTP_200_OK)
+    return Response({"data":data,"message":"No content","code":status.HTTP_200_OK},status=status.HTTP_200_OK)
 
 @api_view(['PUT'])
 def set_user(request, id_user):
@@ -55,8 +56,8 @@ def set_user(request, id_user):
         
         user.save()
         
-        return Response({"message":"Success"},status=status.HTTP_200_OK)
-    return Response({"message":"Failded"},status=status.HTTP_204_NO_CONTENT)
+        return Response({"data":"No content","message":"Success","code":status.HTTP_200_OK},status=status.HTTP_200_OK)
+    return Response({"data":"No content","message":"Failded","code":status.HTTP_204_NO_CONTENT},status=status.HTTP_204_NO_CONTENT)
         
     
     

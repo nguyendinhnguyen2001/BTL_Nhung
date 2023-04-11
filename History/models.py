@@ -7,7 +7,7 @@ class History(models.Model):
     ph=models.FloatField()
     turbidity=models.FloatField()
     tds=models.FloatField()
-    result=models.CharField(max_length=50)
+    result=models.BooleanField()
     time_posted=models.CharField(max_length=200)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     
